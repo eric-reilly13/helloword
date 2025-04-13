@@ -1,0 +1,5 @@
+apiVersion: v2
+name: helloworld
+description: A simple Hello World app chart
+version: 0.1.0
+appVersion: "1.0"

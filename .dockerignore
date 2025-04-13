@@ -1,0 +1,10 @@
+# Ignore everything by default
+**
+
+# But include what's needed for the Docker build
+!app/
+!Dockerfile
+!requirements.txt
+
+# (Optional) If Dockerfile is outside app/, allow this
+!*.py  # if needed
