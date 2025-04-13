@@ -1,0 +1,12 @@
+namespace: dev-playground
+
+replicaCount: 1
+
+image:
+  repository: docker.io/ericreilly13/helloworld
+  tag: 1.1
+
+service:
+  name: hello-service
+  type: LoadBalancer
+  port: 80
