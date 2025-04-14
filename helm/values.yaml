@@ -4,9 +4,30 @@ replicaCount: 1
 
 image:
   repository: docker.io/ericreilly13/helloworld
-  tag: 1.1
+  tag: 1.2
 
 service:
   name: hello-service
   type: LoadBalancer
   port: 80
+  targetPort: 80
+
+env:
+  DB_HOST:
+    secretName: db-credentials
+    key: DB_HOST
+  DB_NAME:
+    secretName: db-credentials
+    key: DB_NAME
+  DB_USER:
+    secretName: db-credentials
+    key: DB_USER
+  DB_PASSWORD:
+    secretName: db-credentials
+    key: DB_PASSWORD
+
+cron:
+  image:
+    repository: docker.io/ericreilly13/poll-time-api-bash
+    tag: "1.0"
+  schedule: "*/1 * * * *"  # Every 1 minute

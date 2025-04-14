@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Chart.Name }}-cron
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: "{{ .Values.cron.schedule }}"  # Schedule from values.yaml
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ .Chart.Name }}-cron
+            image: {{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}
+            imagePullPolicy: IfNotPresent
+            command: ["python", "cron_script.py"]
+          restartPolicy: OnFailure

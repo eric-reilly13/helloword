@@ -1,7 +1,12 @@
 FROM python:3.9-slim-buster
 
-# Install curl and bash
-RUN apt-get update && apt-get install -y curl bash
+# Install curl, bash, and PostgreSQL development libraries
+RUN apt-get update && apt-get install -y \
+    curl \
+    bash \
+    libpq-dev \
+    gcc \
+    && apt-get clean
 
 # Set working directory inside the container
 WORKDIR /app
@@ -9,8 +14,11 @@ WORKDIR /app
 # Copy your Python app code into the container
 COPY app/app.py .
 
-# Install Flask
-RUN pip install Flask
+# Copy requirements.txt into the container
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 80 to be able to access it
 EXPOSE 80
