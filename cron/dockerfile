@@ -1,0 +1,16 @@
+FROM python:3.9-slim-buster
+
+# Install dependencies
+RUN apt-get update && apt-get install -y curl && apt-get clean
+
+# Set working directory
+WORKDIR /cron
+
+# Copy the cron script
+COPY cron_script.py .
+
+# Install Python dependencies
+RUN pip install requests
+
+# Command to run the cron script
+CMD ["python", "cron_script.py"]

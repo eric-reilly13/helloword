@@ -1,20 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-app
+  name: {{ .Chart.Name }}
   namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: hello-app
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: hello-app
+        app: {{ .Chart.Name }}
     spec:
       containers:
-      - name: hello-container
+      - name: {{ .Chart.Name }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.env.DB_HOST.secretName }}
+              key: {{ .Values.env.DB_HOST.key }}
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.env.DB_NAME.secretName }}
+              key: {{ .Values.env.DB_NAME.key }}
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.env.DB_USER.secretName }}
+              key: {{ .Values.env.DB_USER.key }}
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.env.DB_PASSWORD.secretName }}
+              key: {{ .Values.env.DB_PASSWORD.key }}
         ports:
-        - containerPort: 80
+        - containerPort: {{ .Values.service.targetPort }}
