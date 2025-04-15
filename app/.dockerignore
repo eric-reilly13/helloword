@@ -2,7 +2,7 @@
 **
 
 # But include what's needed for the Docker build
-!app/
+!app.py
 !Dockerfile
 !requirements.txt
 
